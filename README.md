@@ -12,20 +12,26 @@ If Auto DevOps is not already enabled for this project, you can [turn it on](htt
 
 If not using Auto DevOps, this is a sample .gitlab-ci.yml
 ```
-default: 
-  tags: [ "k8s" ] # Execute on group k8s runners
-
 variables:
   SECURE_LOG_LEVEL: "debug"
 
 stages:
 - build
-- test
-- deploy
 
-build-job:
+build-image:
   stage: build
+  services:
+  - docker:dind
+  variables:
+    IMAGE: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:$CI_COMMIT_SHA
+    IMAGE_LATEST: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:latest
+  before_script:
+    - docker info
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-  - echo "Compiling the code..."
-  - echo "Compile complete."
+    - docker build -t $IMAGE .
+  after_script:
+    - docker tag $IMAGE $IMAGE_LATEST
+    - docker push $IMAGE
+    - docker push $IMAGE_LATEST
 ```
