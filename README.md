@@ -14,12 +14,15 @@ If not using Auto DevOps, this is a sample .gitlab-ci.yml
 ```
 default: 
   tags: [ "k8s" ] # Execute on group k8s runners
+
 variables:
   SECURE_LOG_LEVEL: "debug"
+
 stages:
 - build
 - test
 - deploy
+
 build-job:
   stage: build
   script:
