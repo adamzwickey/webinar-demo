@@ -20,6 +20,7 @@ stages:
 
 build-image:
   stage: build
+  image: docker:latest
   services:
   - docker:dind
   variables:
