@@ -19,7 +19,7 @@ public class DemoApplication implements CommandLineRunner {
 
 	@GetMapping("/")
 	String home() {
-		return "Spring is here!";
+		return "Winter is here!";
 	}
 
 	@Autowired
