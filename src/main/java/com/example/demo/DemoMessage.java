@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import org.hibernate.annotations.UuidGenerator;
+import jakarta.validation.constraints.NotBlank;
 
 import jakarta.persistence.*;
 
@@ -8,6 +9,7 @@ import jakarta.persistence.*;
 @Table(name = "messages")
 public class DemoMessage {
     
+    @NotBlank(message = "Message cannot be blank")
     private String message;
     @Id
     @UuidGenerator

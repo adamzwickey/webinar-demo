@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import jakarta.validation.Valid;
 
 @Controller
 public class DemoController {
@@ -60,7 +61,7 @@ public class DemoController {
     @RequestMapping(value = "/messages", method = RequestMethod.PUT, consumes="application/json")
     @ResponseBody
     @CrossOrigin
-    public DemoMessage save(@RequestBody DemoMessage input) {
+    public DemoMessage save(@Valid @RequestBody DemoMessage input) {
         LOG.info("Saving message [" + input + "] into DB");
         DemoMessage m =_repo.save(input);
         LOG.info("DemoMessage-[" + m + "]");
